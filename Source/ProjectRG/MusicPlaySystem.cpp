@@ -55,9 +55,9 @@ void AMusicPlaySystem::UpdateMeasureInfo()
 	if (MusicStartTime <= 0.0f) return;
 
 	MusicElapsedTime = GetGameTimeSinceCreation() - MusicStartTime;
-	bool NewMeasureBegin = CurMeasureData.MeasureBeginTime + CurMeasureData.Duration <= MusicElapsedTime;
+	bool IsNewMeasureBegin = CurMeasureData.MeasureBeginTime + CurMeasureData.Duration <= MusicElapsedTime;
 
-	if (NewMeasureBegin)
+	if (IsNewMeasureBegin)
 	{
 		CurMeasureData = MeasureDataArray[CurMeasureData.Index + 1];
 		OnMeasureBegin.Broadcast();
@@ -72,9 +72,9 @@ void AMusicPlaySystem::UpdateNoteInfo()
 	if (MusicStartTime <= 0.0f) return;
 
 	MusicElapsedTime = GetGameTimeSinceCreation() - MusicStartTime;
-	bool NewNoteTime = CurNoteData.NoteTime + CurNoteData.Interval <= MusicElapsedTime;
+	bool IsNewNoteTime = CurNoteData.NoteTime + CurNoteData.Interval <= MusicElapsedTime;
 
-	if (NewNoteTime)
+	if (IsNewNoteTime)
 	{
 		CurNoteData.Index = (CurNoteData.Index + 1) % 8;
 		CurNoteData.NoteTime = CurNoteData.NoteTime + CurNoteData.Interval;
