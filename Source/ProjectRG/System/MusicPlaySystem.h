@@ -27,7 +27,9 @@ protected:
 	void LoadDataTable(UDataTable* MeasureDataTable);
 
 public:
-	void StartMusic(float Offset);
+	void StartMusic(float Offset = 0.0f);
+	float GetMusicElapsedTime();
+	FMeasureData GetCurMeasureData();
 
 protected:
 	virtual void Tick(float DeltaTime) override;
@@ -56,4 +58,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	TArray<FMeasureData> MeasureDataArray;
+
+	UPROPERTY(EditAnywhere)
+	UDataTable* MeasureDataTable;
 };

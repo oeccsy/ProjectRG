@@ -14,20 +14,22 @@ AMusicPlaySystem::AMusicPlaySystem() : MusicStartTime(0.0f), MusicElapsedTime(0.
 void AMusicPlaySystem::BeginPlay()
 {
 	Super::BeginPlay();
+
+	LoadDataTable(MeasureDataTable);
 }
 
-void AMusicPlaySystem::LoadDataTable(UDataTable* MeasureDataTable)
+void AMusicPlaySystem::LoadDataTable(UDataTable* InMeasureDataTable)
 {
-	if (!MeasureDataTable) return;
+	if (!InMeasureDataTable) return;
 
-	for (const FName& RowName : MeasureDataTable->GetRowNames())
+	for (const FName& RowName : InMeasureDataTable->GetRowNames())
 	{
-		FMeasureData* MeasureData = MeasureDataTable->FindRow<FMeasureData>(RowName, TEXT(""));
+		FMeasureData* MeasureData = InMeasureDataTable->FindRow<FMeasureData>(RowName, TEXT(""));
 		if (MeasureData) MeasureDataArray.Add(*MeasureData);
 	}
 }
 
-void AMusicPlaySystem::StartMusic(float Offset = 0.0f)
+void AMusicPlaySystem::StartMusic(float Offset)
 {
 	MusicStartTime = GetGameTimeSinceCreation() + Offset;
 	MusicElapsedTime = 0.0f;
@@ -41,6 +43,16 @@ void AMusicPlaySystem::StartMusic(float Offset = 0.0f)
 	CurNoteData.Interval = 0.0f;
 
 	Audio->Play();
+}
+
+float AMusicPlaySystem::GetMusicElapsedTime()
+{
+	return MusicElapsedTime;
+}
+
+FMeasureData AMusicPlaySystem::GetCurMeasureData()
+{
+	return CurMeasureData;
 }
 
 void AMusicPlaySystem::Tick(float DeltaTime)
@@ -64,6 +76,7 @@ void AMusicPlaySystem::UpdateMeasureInfo()
 
 		FString NewMeasureTime = FString::SanitizeFloat(CurMeasureData.MeasureBeginTime);
 		UE_LOG(LogTemp, Log, TEXT("New Measure : %s"), *NewMeasureTime);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("New Measure : ") + NewMeasureTime);
 	}
 }
 
@@ -83,7 +96,6 @@ void AMusicPlaySystem::UpdateNoteInfo()
 
 		FString NewNoteTime = FString::SanitizeFloat(CurNoteData.NoteTime);
 		UE_LOG(LogTemp, Log, TEXT("New Note : %s"), *NewNoteTime);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("New Note : ") + NewNoteTime);
 	}
 }
-
-
