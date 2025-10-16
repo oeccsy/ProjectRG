@@ -42,5 +42,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* HitNoteD;
 
+	UPROPERTY(VisibleAnywhere, Category = "Ref")
 	ARGGameMode* GameModeRef;
 };

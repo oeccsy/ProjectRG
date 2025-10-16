@@ -1,27 +1,33 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "System/SkillExecuteSystem.h"
+#include "Skill/Skill.h"
+#include "Skill/PunchSkill.h"
+#include "Data/NoteCombData.h"
 
-// Sets default values
 ASkillExecuteSystem::ASkillExecuteSystem()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+ 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
+void ASkillExecuteSystem::RegisterSkills()
+{
+	SkillTable.Add(TEXT("AAAA"), UPunchSkill::StaticClass());
+}
+
+void ASkillExecuteSystem::ExecuteSkill(FNoteCombData NoteComb)
+{
+	TSubclassOf<USkill>* TargetSkill = SkillTable.Find(NoteComb.Comb);
+	if (TargetSkill == nullptr) return;
+
+	USkill* SkillInstance = NewObject<USkill>(*TargetSkill);
+	if (SkillInstance->IsSkillValid()) SkillInstance->ExecuteSkill();
+}
+
 void ASkillExecuteSystem::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	RegisterSkills();
 }
-
-// Called every frame
-void ASkillExecuteSystem::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-

@@ -16,13 +16,21 @@ class PROJECTRG_API ARGGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
+public:
+	UFUNCTION()
+	void OnMeasureBegin();
+
 protected:
 	virtual void BeginPlay() override;
 	
 public:
+	UPROPERTY(VisibleAnywhere, Category = "System")
 	AMusicPlaySystem* MusicPlaySystem;
+	UPROPERTY(VisibleAnywhere, Category = "System")
 	ANoteCombSystem* NoteCombSystem;
+	UPROPERTY(VisibleAnywhere, Category = "System")
 	ACinematicsPlaySystem* CinematicsPlaySystem;
+	UPROPERTY(VisibleAnywhere, Category = "System")
 	ASkillExecuteSystem* SkillExecuteSystem;
 
 private:

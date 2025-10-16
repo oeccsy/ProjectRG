@@ -10,7 +10,7 @@ public class ProjectRG : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+		PrivateDependencyModuleNames.AddRange(new string[] { "LevelSequence", "MovieScene" });
 
 		PublicIncludePaths.AddRange(new string[] { "ProjectRG", "ProjectRG/Data", "ProjectRG/System" });
 

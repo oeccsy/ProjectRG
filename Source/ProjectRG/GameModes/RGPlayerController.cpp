@@ -40,7 +40,6 @@ void ARGPlayerController::OnHitNoteA(const FInputActionValue& Value)
 	FMeasureData CurMeasureData = GameModeRef->MusicPlaySystem->GetCurMeasureData();
 
 	GameModeRef->NoteCombSystem->TryAddNoteA(MusicElapsedTime, CurMeasureData, 0.1f);
-	GameModeRef->NoteCombSystem->UpdateCurNoteCombWidget();
 }
 
 void ARGPlayerController::OnHitNoteS(const FInputActionValue& Value)

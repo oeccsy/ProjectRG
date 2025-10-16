@@ -19,22 +19,33 @@ ANoteCombSystem::ANoteCombSystem() : InputOffset(0.2f)
 
 void ANoteCombSystem::TryAddNoteA(float MusicElapsedTime, FMeasureData CurMeasureData, float Threshold)
 {
+	if (MusicElapsedTime <= 0.0f) return;
+	if (CurMeasureData.Duration <= 0.0f) return;
+
 	float InputTime = MusicElapsedTime + InputOffset;
 	float MeasureProgress = (InputTime - CurMeasureData.MeasureBeginTime) / CurMeasureData.Duration;
-	int NoteIndex = FMath::RoundToInt(MeasureProgress);
+	int NoteIndex = FMath::RoundToInt(MeasureProgress * 8);
 
 	FNoteCombData& TargetNoteComb = (NoteIndex == 8) ? NextNoteCombData : CurNoteCombData;
 	if (NoteIndex == 8) NoteIndex = 0;
 
+	UE_LOG(LogTemp, Log, TEXT("NoteIndex : %d"), NoteIndex);
+
+
 	if (TargetNoteComb.NoteUseCount[NoteIndex] > 0) TargetNoteComb.CombSuccess = false;
-	if (!TargetNoteComb.CombSuccess) return;
 	
-	TargetNoteComb.Comb.AppendChar('A');
-	++TargetNoteComb.NoteUseCount[NoteIndex];
+	if (TargetNoteComb.CombSuccess)
+	{
+		TargetNoteComb.Comb.AppendChar('A');
+		++TargetNoteComb.NoteUseCount[NoteIndex];
+	}
+
+	UpdateCurNoteCombWidget();
 }
 
 void ANoteCombSystem::SwitchNoteComb()
 {
+	UE_LOG(LogTemp, Log, TEXT("NoteCombSystem : SwitchNoteComb"));
 	CurNoteCombData = NextNoteCombData;
 
 	NextNoteCombData = { };

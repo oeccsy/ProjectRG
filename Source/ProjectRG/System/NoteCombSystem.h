@@ -18,21 +18,24 @@ class PROJECTRG_API ANoteCombSystem : public AActor
 public:	
 	ANoteCombSystem();
 
-	void InitWidget();
 	void TryAddNoteA(float MusicElapsedTime, FMeasureData CurMeasureData, float Threshold);
+	UFUNCTION()
 	void SwitchNoteComb();
+	
+protected:
+	virtual void BeginPlay() override;
 	void UpdateCurNoteCombWidget();
 
 protected:
-	virtual void BeginPlay() override;
-
-protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "NoteComb")
 	float InputOffset;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "NoteComb")
 	FNoteCombData CurNoteCombData;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "NoteComb")
 	FNoteCombData NextNoteCombData;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG")
 	TSubclassOf<UNoteCombWidget> NoteCombWidgetClass;
-	UPROPERTY(BlueprintReadOnly, Category = "UMG")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UMG")
 	UNoteCombWidget* NoteCombWidget;
 };

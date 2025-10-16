@@ -43,22 +43,21 @@ public:
 	FOnNoteBeginSignature OnNoteBegin;
 
 protected:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Music")
 	UAudioComponent* Audio;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Music")
 	float MusicStartTime;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Music")
 	float MusicElapsedTime;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Music")
 	FMeasureData CurMeasureData;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Music")
 	FNoteData CurNoteData;
 
-	UPROPERTY(VisibleAnywhere)
-	TArray<FMeasureData> MeasureDataArray;
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Music")
 	UDataTable* MeasureDataTable;
+	UPROPERTY(VisibleAnywhere, Category = "Music")
+	TArray<FMeasureData> MeasureDataArray;
 };
